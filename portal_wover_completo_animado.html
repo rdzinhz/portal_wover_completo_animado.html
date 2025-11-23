@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Wover - Portal Completo</title>
+<style>
+    body {margin:0;font-family:'Segoe UI',sans-serif;background:#0d0d0d;color:#e0e0e0;}
+    header{text-align:center;padding:20px;background:#1a1a1a;color:#6a5acd;font-size:2em;font-weight:bold;}
+    .page{display:none;opacity:0;transition:opacity 0.8s ease;padding:40px;text-align:center;min-height:80vh;}
+    .page.active{display:block;opacity:1;}
+    .box, .intro-box{max-width:700px;margin:50px auto;padding:30px;background:#1a1a1a;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.7);text-align:center;}
+    h1{color:#6a5acd;margin-bottom:20px;font-weight:600;}
+    h2{color:#e0e0e0;margin-bottom:15px;}
+    ul{list-style:none;padding:0;}
+    li{margin:10px 0;font-size:1.2em;color:#e0e0e0;}
+    input, textarea{width:90%;padding:12px;margin:15px 0;border-radius:6px;border:1px solid #444;font-size:1em;background:#121212;color:#e0e0e0;}
+    .show-pass{color:#6a5acd;cursor:pointer;font-size:0.9em;display:block;margin-top:-5px;}
+    button{padding:12px 25px;font-size:1.1em;color:#fff;background:#2c3e50;border:none;border-radius:6px;cursor:pointer;font-weight:500;transition:background 0.3s ease;margin:10px;}
+    button:hover{background:#1a252f;}
+    .link{color:#6a5acd;cursor:pointer;display:block;margin-top:15px;}
+    .faq{max-width:800px;margin:30px auto;padding:25px;background:#1a1a1a;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.7);}
+    .faq h2{text-align:center;margin-bottom:25px;color:#6a5acd;font-size:1.6em;font-weight:500;}
+    .question{margin:20px 0;padding:18px;background:#121212;border-radius:6px;cursor:pointer;transition:background 0.3s;font-size:1.1em;color:#e0e0e0;text-align:left;}
+    .question:hover{background:#1f1f1f;}
+    .answer{display:none;margin-top:10px;color:#6a5acd;font-size:1em;}
+    .nav-buttons{text-align:center;margin-top:30px;}
+    .stars span{font-size:2em;cursor:pointer;color:#888;transition:color 0.3s;}
+    .stars span:hover, .stars span.selected{color:#6a5acd;}
+    .comments{margin-top:20px;text-align:left;color:#e0e0e0;}
+    .comment-box{background:#121212;padding:12px;margin:10px 0;border-radius:6px;color:#6a5acd;}
+    footer{text-align:center;padding:20px;background:#1a1a1a;color:#6a5acd;margin-top:40px;font-size:1em;}
+</style>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(-45deg, #0d0d0d, #1a1a1a, #2c3e50, #6a5acd);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #e0e0e0;
+}
+@keyframes gradientBG {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+</style>
+
+</head>
+<body>
+<header>Wover</header>
+
+<!-- Página de Introdução -->
+<div id='intro' class='page active'>
+    <div class='intro-box'>
+        <h1>Bem-vindo ao Wover</h1>
+        <h2>O que você vai aprender neste site:</h2>
+        <ul>
+            <li>✔ Como começar no Marketing Digital</li>
+            <li>✔ Próximos passos para evoluir</li>
+            <li>✔ O que fazer para ter sucesso</li>
+            <li>✔ O que não fazer para evitar erros</li>
+            <li>✔ Abordagem estratégica para resultados</li>
+            <li>✔ Avaliação e feedback para melhorias</li>
+        </ul>
+        <button onclick="showPage('login')">Acessar o Portal</button>
+    </div>
+</div>
+
+<!-- Página de Login -->
+<div id='login' class='page'>
+    <div class='box'>
+        <h1>Login</h1>
+        <input type='email' id='loginEmail' placeholder='Email'>
+        <input type='password' id='loginPass' placeholder='Senha'>
+        <span class='show-pass' onclick="togglePassword('loginPass')">Mostrar/Ocultar senha</span>
+        <button onclick='login()'>Entrar</button>
+        <span class='link' onclick="showPage('register')">Não tem conta? Cadastre-se</span>
+        <span class='link' onclick="showPage('recover')">Esqueceu a senha?</span>
+    </div>
+</div>
+
+<!-- Página de Cadastro -->
+<div id='register' class='page'>
+    <div class='box'>
+        <h1>Cadastro</h1>
+        <input type='email' id='regEmail' placeholder='Email'>
+        <input type='password' id='regPass' placeholder='Senha'>
+        <span class='show-pass' onclick="togglePassword('regPass')">Mostrar/Ocultar senha</span>
+        <button onclick='register()'>Cadastrar</button>
+        <span class='link' onclick="showPage('login')">Já tem conta? Faça login</span>
+    </div>
+</div>
+
+<!-- Página de Recuperação -->
+<div id='recover' class='page'>
+    <div class='box'>
+        <h1>Recuperar Senha</h1>
+        <input type='email' id='recoverEmail' placeholder='Digite seu email'>
+        <button onclick='verifyEmail()'>Verificar Email</button>
+        <div id='resetSection' style='display:none;'>
+            <input type='password' id='newPass' placeholder='Nova senha'>
+            <span class='show-pass' onclick="togglePassword('newPass')">Mostrar/Ocultar senha</span>
+            <button onclick='resetPassword()'>Redefinir Senha</button>
+        </div>
+        <span class='link' onclick="showPage('login')">Voltar ao Login</span>
+    </div>
+</div>
+
+<!-- Conteúdo do Marketing Digital -->
+<div id='p1' class='page'>
+    <section class='faq'>
+        <h2>Como Começar no Marketing Digital</h2>
+        <div class='question'>Qual é o primeiro passo para começar?<div class='answer'>Defina seu objetivo e escolha um nicho que você domina ou gosta.</div></div>
+        <div class='question'>Preciso de muito dinheiro para começar?<div class='answer'>Não! Você pode começar com baixo investimento, usando redes sociais e conteúdo orgânico.</div></div>
+        <div class='question'>Quais habilidades são importantes?<div class='answer'>Marketing de conteúdo, redes sociais, análise de dados e comunicação.</div></div>
+    </section>
+    <div class='nav-buttons'><button onclick="showPage('p2')">Próximo</button></div>
+</div>
+
+<div id='p2' class='page'>
+    <section class='faq'>
+        <h2>Próximos Passos no Marketing Digital</h2>
+        <div class='question'>Como escalar minha estratégia?<div class='answer'>Invista em tráfego pago, automação e análise de métricas para otimizar resultados.</div></div>
+        <div class='question'>Quais ferramentas avançadas devo usar?<div class='answer'>Ferramentas como Google Ads, Facebook Ads, CRM e plataformas de automação.</div></div>
+        <div class='question'>Como manter resultados consistentes?<div class='answer'>Crie conteúdo relevante, acompanhe tendências e ajuste sua estratégia constantemente.</div></div>
+    </section>
+    <div class='nav-buttons'><button onclick="showPage('p1')">Anterior</button><button onclick="showPage('p3')">Próximo</button></div>
+</div>
+
+<div id='p3' class='page'>
+    <section class='faq'>
+        <h2>O que Fazer no Marketing Digital</h2>
+        <div class='question'>Quais ações são essenciais?<div class='answer'>Produzir conteúdo relevante, investir em SEO e engajar nas redes sociais.</div></div>
+        <div class='question'>Como atrair clientes?<div class='answer'>Utilize estratégias de inbound marketing e anúncios segmentados.</div></div>
+        <div class='question'>Qual a importância do e-mail marketing?<div class='answer'>É uma ferramenta poderosa para fidelização e comunicação direta.</div></div>
+    </section>
+    <div class='nav-buttons'><button onclick="showPage('p2')">Anterior</button><button onclick="showPage('p4')">Próximo</button></div>
+</div>
+
+<div id='p4' class='page'>
+    <section class='faq'>
+        <h2>O que Não Fazer no Marketing Digital</h2>
+        <div class='question'>O que evitar?<div class='answer'>Evite comprar seguidores, ignorar métricas e usar spam.</div></div>
+        <div class='question'>Por que não usar clickbait?<div class='answer'>Clickbait prejudica a credibilidade e afasta clientes.</div></div>
+        <div class='question'>Quais erros comuns devo evitar?<div class='answer'>Não negligencie a experiência do usuário e não ignore feedback.</div></div>
+    </section>
+    <div class='nav-buttons'><button onclick="showPage('p3')">Anterior</button><button onclick="showPage('p5')">Próximo</button></div>
+</div>
+
+<div id='p5' class='page'>
+    <section class='faq'>
+        <h2>Abordagem Estratégica</h2>
+        <div class='question'>Qual abordagem seguir?<div class='answer'>Combine marketing de conteúdo com anúncios pagos e análise de dados.</div></div>
+        <div class='question'>Como planejar campanhas?<div class='answer'>Defina objetivos claros, público-alvo e cronograma.</div></div>
+        <div class='question'>Por que usar funil de vendas?<div class='answer'>Ele ajuda a guiar o cliente desde a descoberta até a conversão.</div></div>
+    </section>
+    <div class='nav-buttons'><button onclick="showPage('p4')">Anterior</button><button onclick="showPage('feedback')">Ir para Avaliação</button></div>
+</div>
+
+<!-- Página de Avaliação -->
+<div id='feedback' class='page'>
+    <div class='faq'>
+        <h2>Avalie nosso site</h2>
+        <div class='stars'>
+            <span data-value='1'>★</span>
+            <span data-value='2'>★</span>
+            <span data-value='3'>★</span>
+            <span data-value='4'>★</span>
+            <span data-value='5'>★</span>
+        </div>
+        <textarea id='comment' placeholder='Escreva seu comentário...'></textarea>
+        <button onclick='submitFeedback()'>Enviar Avaliação</button>
+        <div class='comments' id='comments'></div>
+        <div class='nav-buttons'><button onclick="showPage('p5')">Anterior</button></div>
+    </div>
+</div>
+
+<footer>Criado por Luã Rodrigo Santana da Silva Gama | Nascido em 30/03/2009</footer>
+<script>
+function showPage(pageId){document.querySelectorAll('.page').forEach(page=>{page.classList.remove('active');});document.getElementById(pageId).classList.add('active');}
+const qs=document.querySelectorAll('.question');qs.forEach(q=>{q.addEventListener('click',()=>{const a=q.querySelector('.answer');a.style.display=a.style.display==='block'?'none':'block';});});
+let selectedRating=0;const stars=document.querySelectorAll('.stars span');stars.forEach(star=>{star.addEventListener('click',()=>{selectedRating=star.getAttribute('data-value');stars.forEach(s=>s.classList.remove('selected'));for(let i=0;i<selectedRating;i++){stars[i].classList.add('selected');}});});
+function submitFeedback(){const comment=document.getElementById('comment').value;if(selectedRating===0||comment.trim()===''){alert('Por favor, selecione uma avaliação e escreva um comentário.');return;}const commentsDiv=document.getElementById('comments');const newComment=document.createElement('div');newComment.classList.add('comment-box');newComment.innerHTML=`<strong>Avaliação:</strong> ${selectedRating} ★<br><strong>Comentário:</strong> ${comment}`;commentsDiv.appendChild(newComment);document.getElementById('comment').value='';stars.forEach(s=>s.classList.remove('selected'));selectedRating=0;}
+function togglePassword(id){const input=document.getElementById(id);input.type=input.type==='password'?'text':'password';}
+function register(){const email=document.getElementById('regEmail').value;const pass=document.getElementById('regPass').value;if(email&&pass){localStorage.setItem('email',email);localStorage.setItem('pass',pass);localStorage.setItem('history',JSON.stringify([pass]));alert('Cadastro realizado com sucesso!');showPage('login');}else{alert('Preencha todos os campos!');}}
+function login(){const email=document.getElementById('loginEmail').value;const pass=document.getElementById('loginPass').value;const savedEmail=localStorage.getItem('email');const savedPass=localStorage.getItem('pass');if(email===savedEmail&&pass===savedPass){localStorage.setItem('lastLogin',JSON.stringify({email:email,date:new Date().toLocaleString()}));alert('Login realizado com sucesso!');showPage('p1');}else{alert('Email ou senha incorretos!');}}
+function verifyEmail(){const email=document.getElementById('recoverEmail').value;const savedEmail=localStorage.getItem('email');if(email===savedEmail){document.getElementById('resetSection').style.display='block';}else{alert('Email não encontrado!');}}
+function resetPassword(){const newPass=document.getElementById('newPass').value;const currentPass=localStorage.getItem('pass');let history=JSON.parse(localStorage.getItem('history'))||[];
+if(!newPass){alert('Digite a nova senha!');return;}
+if(newPass===currentPass){alert('A nova senha não pode ser igual à senha atual!');return;}
+if(history.includes(newPass)){alert('A nova senha não pode ser igual a uma senha antiga!');return;}
+history.push(newPass);localStorage.setItem('history',JSON.stringify(history));localStorage.setItem('pass',newPass);alert('Senha redefinida com sucesso!');showPage('login');}
+</script>
+</body>
+</html>
